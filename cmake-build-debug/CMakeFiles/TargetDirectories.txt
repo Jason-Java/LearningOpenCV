@@ -1,0 +1,3 @@
+F:/C/LearningOpenCV/cmake-build-debug/CMakeFiles/LearningOpenCV.dir
+F:/C/LearningOpenCV/cmake-build-debug/CMakeFiles/edit_cache.dir
+F:/C/LearningOpenCV/cmake-build-debug/CMakeFiles/rebuild_cache.dir
