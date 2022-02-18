@@ -383,27 +383,30 @@ void tracBar_8_5(int pos, void *userdata)
         return;
     }
     Mat src = *(Mat *) userdata;
-    Mat scharr_x,scharr_y;
+    Mat scharr_x, scharr_y;
 
     addWeighted(scharr_x, 1.0, scharr_y, 1.0, 0.0, src);
 
     imshow("索贝尔导数", src);
 }
+
 void Learning::L_8_5()
 {
-   static  Mat src = imread("C:\\Users\\Jason\\Desktop\\VersionImage\\IMG_0002.jpg", IMREAD_UNCHANGED);
-    Mat binary, result,gray;
+    static Mat src = imread("C:\\Users\\Jason\\Desktop\\VersionImage\\master.jpg", IMREAD_UNCHANGED);
+    Mat binary, result, gray,dst;
     if (src.empty())
     {
         cout << "图片读取失败" << endl;
         return;
     }
-    cvtColor(src, src, COLOR_BGR2GRAY);
-    threshold(src, binary, 0, 255, THRESH_BINARY_INV | cv::THRESH_OTSU);
-    imshow("二值化", binary);
-    Mat kernel = getStructuringElement(MORPH_RECT, Size(5, 5));
-    erode(binary, result, kernel);
-    imshow("腐蚀", result);
+
+    Point2f srcPoint[] = {Point2f(0, 0), Point2f(src.cols-1, 0), Point2f(0, src.rows-1)};
+    Point2f dstPoint[] = {Point2f(0, src.rows*0.33f), Point2f(src.cols*0.85f, src.rows*0.25f), Point2f(src.cols*0.15f, src.rows*0.7f)};
+
+    Mat wrapAffineImage = getAffineTransform(srcPoint, dstPoint);
+    warpAffine(src, dst, wrapAffineImage, Size(src.cols*2,src.rows*2), WARP_INVERSE_MAP);
+
+    imshow("上采样", dst);
 }
 
 
